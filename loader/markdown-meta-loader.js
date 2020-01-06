@@ -36,7 +36,7 @@ const getTags = tagText => getRegexpRes(tagText, /(?<=\[\s?).*(?=\])/).split(/,\
 
 module.exports = function(content) {
     let metaInfo = getFileMetas(content)
-    metaInfo.path = getRegexpRes(this.resourcePath, /(?<=\\post)\\.*?(?=.md)/).replace(/\\/g, '/')
+    metaInfo.path = '/article' + getRegexpRes(this.resourcePath, /(?<=\\post)\\.*?(?=.md)/).replace(/\\/g, '/')
     let listItem = metaList.find(item => item.path === metaInfo.path)
     listItem ? Object.assign(listItem, metaInfo) : metaList.push(metaInfo)
     writeFile(`export default ${JSON.stringify(metaList, null, 2)}`)

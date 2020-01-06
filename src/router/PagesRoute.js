@@ -5,9 +5,7 @@ export default routes.keys().map(key => {
     let name = key.match(/(?<=\.\/).*(?=\.vue)/)[0].toLowerCase()
     return {
         path: "/" + name,
-        name: name,
-        component: () => {
-            return import('@/views' + key.substring(1))
-        }
+        name: name.replace(/\//,'_'),
+        component: routes(key).default || routes(key)
     }
 })

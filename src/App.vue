@@ -1,24 +1,24 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <a-row>
+    <a-row id="nav">
+      <a-col :xs="{span:24}" :md="{span:14}">
         <a-col :xs="{span:24}" :md="{span:22}">
           <h1 class="white-shadow" style="color:white;">Focus On</h1>
           <p class="white-shadow">前端、后端学习笔记，专注成就自我</p>
         </a-col>
-      </a-row>
-      <a-row>
-        <a-col :xs="{span:20,offset:2}" :md="{span:20,offset:1}" :lg="{span:7,offset:1}">
+        <a-col :xs="{span:20,offset:2}" :md="{span:20,offset:2}" :lg="{span:18,offset:1}">
           <home-navigator></home-navigator>
         </a-col>
-        <a-col :xs="{span:0}" :md="{span:0}" :lg="{span:12,offset:4}">
+      </a-col>
+      <a-col :span="10">
+        <a-col class="router-wrapper" :xs="{span:0}" :md="{span:0}" :lg="{span:24}">
           <router-view />
         </a-col>
-      </a-row>
+      </a-col>
 
       <!-- <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>-->
-    </div>
+    </a-row>
   </div>
 </template>
 <script>
@@ -47,10 +47,10 @@ export default {
   position: absolute;
   left: 0;
   top: 0;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   background: #ddd url("~@/assets/images/bg1.png") no-repeat;
-  background-position: 35% bottom;
+  background-position: 30% bottom;
   color: white;
 }
 
@@ -70,5 +70,15 @@ export default {
 
 .white-shadow {
   text-shadow: 0 0 4px rgb(255, 255, 255, 0.6);
+}
+
+.router-wrapper {
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+  z-index: 9;
+  color: #333;
+  text-align: left;
+  height: 100vh;
+  overflow-y: auto;
 }
 </style>
