@@ -1,8 +1,15 @@
 <template>
-  <div class="filter" style="padding-right:2rem;margin-top:-2rem;">
+  <div class="filter">
+    <a-icon v-if="currentPage>1" class="page-arrow" type="caret-left" @click.native="prevPage" />
+    <a-icon
+      v-if="currentPage < totalPage"
+      class="page-arrow"
+      type="caret-right"
+      @click.native="nextPage"
+    />
     <article
       class="article-card"
-      v-for="(article,index) in articleList"
+      v-for="(article,index) in showArticles"
       :key="index"
       @click="$router.push(article.path)"
     >
@@ -24,15 +31,57 @@ export default {
   name: "condition",
   data() {
     return {
-      articleList
+      articleList,
+      currentPage: 1,
+      pageSize: 3,
+      totalPage: articleList.length / this.pageSize
+    }
+  },
+  computed: {
+    showArticles() {
+      let start = ( this.currentPage - 1 ) * this.pageSize
+      let end = this.currentPage * this.pageSize
+      return this.articleList.slice( start, end )
+    }
+  },
+  methods: {
+    prevPage() {
+      if ( this.currentPage > 1 ) {
+        this.currentPage--
+      }
+    },
+    nextPage() {
+      if ( this.currentPage === totalPage ) { return; }
+      this.currentPage++
     }
   }
 };
 </script>
 
 <style lang="scss" scoped>
+.filter {
+  padding: 1rem 6rem;
+  position: relative;
+}
+
+.page-arrow {
+  position: absolute;
+  font-size: 42px;
+  top: 40vh;
+  color: white;
+  cursor: pointer;
+
+  &:nth-child(1) {
+    left: 2rem;
+  }
+
+  &:nth-child(2) {
+    right: 2rem;
+  }
+}
+
 .article-card {
-    position: relative;
+  position: relative;
   padding: 0.6rem 1rem;
   background-color: #f5f5f5;
   border-radius: 2px;
@@ -43,7 +92,7 @@ export default {
   cursor: pointer;
 
   &:hover {
-    left: -10%;
+    left: -30px;
   }
 
   > .title {
@@ -83,3 +132,4 @@ export default {
   }
 }
 </style>
+

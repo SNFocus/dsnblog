@@ -1,27 +1,38 @@
 <template >
   <!-- 前端 后端 工具 面试 demo -->
   <section class="navigation">
-    <router-link class="home-card" to="/font_home">
-      <img class="card-img" src="@/assets/images/1.png" alt="目录图片" />
-      <span>前端·点滴</span>
-    </router-link>
-    <router-link class="home-card" to="/serve_home">
-      <img class="card-img" src="@/assets/images/3.png" alt="目录图片" />
-      <span>后端·笔记</span>
-    </router-link>
-    <router-link class="home-card" to="/tool">
-      <img class="card-img" src="@/assets/images/2.png" alt="目录图片" />
-      <span>缘·工具</span>
-    </router-link>
-    <router-link class="home-card" to="/demos">
-      <img class="card-img" src="@/assets/images/7.png" alt="目录图片" />
-      <span>随心·DEMO</span>
-    </router-link>
+    <div>
+      <router-link class="home-card" to="/font_home">
+        <img class="card-img" src="@/assets/images/1.png" alt="目录图片" />
+        <span>前端·点滴</span>
+      </router-link>
+    </div>
+    <div>
+      <router-link class="home-card" to="/serve_home">
+        <img class="card-img" src="@/assets/images/3.png" alt="目录图片" />
+        <span>后端·笔记</span>
+      </router-link>
+    </div>
+    <div>
+      <router-link class="home-card" to="/tool">
+        <img class="card-img" src="@/assets/images/2.png" alt="目录图片" />
+        <span>缘·工具</span>
+      </router-link>
+    </div>
+    <div>
+      <router-link class="home-card" to="/demos">
+        <img class="card-img" src="@/assets/images/7.png" alt="目录图片" />
+        <span>随心·DEMO</span>
+      </router-link>
+    </div>
   </section>
 </template>
 <style lang="scss" scoped>
 .navigation {
   margin-top: 3rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .home-card {

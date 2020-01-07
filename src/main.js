@@ -2,6 +2,8 @@ import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
 import 'ant-design-vue/dist/antd.css'
+import 'github-markdown-css';
+
 import {
   // Affix,
   // Anchor,
@@ -23,7 +25,7 @@ import {
   // Divider,
   // Dropdown,
   // Form,
-  // Icon,
+  Icon,
   // Input,
   // InputNumber,
   // Layout,
@@ -98,7 +100,7 @@ Vue.use(Col);
 // Vue.use(Drawer);
 // Vue.use(Dropdown);
 // Vue.use(Form);
-// Vue.use(Icon);
+Vue.use(Icon);
 // Vue.use(Input);
 // Vue.use(InputNumber);
 // Vue.use(Layout);

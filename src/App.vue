@@ -1,17 +1,25 @@
 <template>
   <div id="app">
     <a-row id="nav">
-      <a-col :xs="{span:24}" :md="{span:14}">
-        <a-col :xs="{span:24}" :md="{span:22}">
-          <h1 class="white-shadow" style="color:white;">Focus On</h1>
+      <a-col :xs="{span:24}" :md="{span:12}">
+        <a-col :xs="{span:24}" :md="{span:22}" style="padding-top:2rem;">
+          <h1 class="white-shadow" style="color:white;cursor:pointer;" @click="$router.push('/home')">Focus On</h1>
           <p class="white-shadow">前端、后端学习笔记，专注成就自我</p>
         </a-col>
         <a-col :xs="{span:20,offset:2}" :md="{span:20,offset:2}" :lg="{span:18,offset:1}">
           <home-navigator></home-navigator>
         </a-col>
       </a-col>
-      <a-col :span="10">
-        <a-col class="router-wrapper" :xs="{span:0}" :md="{span:0}" :lg="{span:24}">
+      <a-col :span="12">
+        <a-icon type="left-circle" class="backBtn" />
+        <a-col
+          class="router-wrapper"
+          :class="{'markdown-body':isArticlePage}"
+          :xs="{span:0}"
+          :md="{span:0}"
+          :lg="{span:24}"
+        >
+
           <router-view />
         </a-col>
       </a-col>
@@ -24,6 +32,17 @@
 <script>
 import HomeNavigator from '@/components/HomeNavigator'
 export default {
+  data() {
+    return {
+      isArticlePage: false
+    }
+  },
+  watch: {
+    $route( val ) {
+      this.isArticlePage = val.path.includes( '/article/' )
+      console.log(val.path,this.isArticlePage)
+    }
+  },
   components: {
     'home-navigator': HomeNavigator
   }
@@ -75,10 +94,20 @@ export default {
 .router-wrapper {
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
+  padding-left: 3rem !important;
   z-index: 9;
   color: #333;
   text-align: left;
   height: 100vh;
   overflow-y: auto;
 }
+
+.markdown-body{
+  background:#eee;
+}
+
+/* .backBtn{
+  position: absolute;
+  left: 0;
+} */
 </style>
