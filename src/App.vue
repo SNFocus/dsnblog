@@ -10,7 +10,7 @@
           >Focus On</h1>
           <p class="white-shadow">前端、后端学习笔记，专注成就自我</p>
         </a-col>
-        <a-col :span="22" :offset="1" style="max-width:550px;">
+        <a-col :span="22" :offset="1" style="max-width:550px;margin-top:10%;">
           <home-navigator ></home-navigator>
         </a-col>
       </a-col>
