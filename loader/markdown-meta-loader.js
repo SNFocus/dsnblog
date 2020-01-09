@@ -1,3 +1,4 @@
+import { getOptions } from 'loader-utils';
 let fs = require('fs'),
     metaList = [],
     mdFileRegexps = {
@@ -35,6 +36,8 @@ const writeFile = (content) => {
 const getTags = tagText => getRegexpRes(tagText, /(?<=\[\s?).*(?=\])/).split(/,\s+/)
 
 module.exports = function(content) {
+    console.log('************************************************************************************')
+    console.log(getOptions(this))
     let metaInfo = getFileMetas(content)
     metaInfo.path = '/article' + getRegexpRes(this.resourcePath, /(?<=\\post)\\.*?(?=.md)/).replace(/\\/g, '/')
     let listItem = metaList.find(item => item.path === metaInfo.path)

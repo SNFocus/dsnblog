@@ -6,5 +6,7 @@ categories: Web 开发可能有些挑战性——我们会提供足够详细的�
 ---
 ## 配置
 springBoot启动必须配置数据源
+```
 server.port=8084
+4545fsdfsf
 ```

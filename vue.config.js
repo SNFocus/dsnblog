@@ -9,7 +9,24 @@ module.exports = {
                     options: {
                         raw: true
                     }
-                }, 'markdown-meta-loader']
+                }, {
+                    loader:'markdown-meta-loader',
+                    options:{
+                        dest:'src/config/articleMeta.js',
+                        wrapperRegexp:/(?<=---\s+)[\s\S]*?(?=---+)/g,
+                        metasRegexps:{
+                            title: /(?<=title:\s*).*/g,
+                            tags: function(data){
+                                /(?<=tags:\s*).*/g
+                            },
+                            date: /(?<=date:\s*).*/g,
+                            categories: /(?<=categories:\s*).*/g
+                        },
+                        append:function(loaderCtx,data){
+
+                        }
+                    }
+                }]
             }]
         },
         resolveLoader: {

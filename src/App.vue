@@ -3,15 +3,19 @@
     <a-row id="nav">
       <a-col :xs="{span:24}" :md="{span:12}">
         <a-col :xs="{span:24}" :md="{span:22}" style="padding-top:2rem;">
-          <h1 class="white-shadow" style="color:white;cursor:pointer;" @click="$router.push('/home')">Focus On</h1>
+          <h1
+            class="white-shadow"
+            style="color:white;cursor:pointer;"
+            @click="$router.push('/home')"
+          >Focus On</h1>
           <p class="white-shadow">前端、后端学习笔记，专注成就自我</p>
         </a-col>
-        <a-col :xs="{span:20,offset:2}" :md="{span:20,offset:2}" :lg="{span:18,offset:1}">
-          <home-navigator></home-navigator>
+        <a-col :span="22" :offset="1" style="max-width:550px;">
+          <home-navigator ></home-navigator>
         </a-col>
       </a-col>
       <a-col :span="12">
-        <a-icon type="left-circle" class="backBtn" />
+        <a-icon v-show="isArticlePage" type="left-circle" class="backBtn" @click="$router.go(-1)" />
         <a-col
           class="router-wrapper"
           :class="{'markdown-body':isArticlePage}"
@@ -19,28 +23,24 @@
           :md="{span:0}"
           :lg="{span:24}"
         >
-
           <router-view />
         </a-col>
       </a-col>
-
-      <!-- <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>-->
     </a-row>
   </div>
 </template>
 <script>
 import HomeNavigator from '@/components/HomeNavigator'
+
 export default {
   data() {
     return {
-      isArticlePage: false
+      isArticlePage: this.$route.path.includes( '/article/' )
     }
   },
   watch: {
     $route( val ) {
       this.isArticlePage = val.path.includes( '/article/' )
-      console.log(val.path,this.isArticlePage)
     }
   },
   components: {
@@ -102,12 +102,21 @@ export default {
   overflow-y: auto;
 }
 
-.markdown-body{
-  background:#eee;
+.markdown-body {
+  background: #eee;
 }
 
-/* .backBtn{
+.backBtn {
   position: absolute;
-  left: 0;
-} */
+  left: -2rem;
+  top: 1rem;
+  z-index: 99;
+  font-size: 20px;
+  cursor: pointer;
+  filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.2));
+}
+
+.backBtn:hover {
+  transform: scale(1.1);
+}
 </style>

@@ -1,32 +1,45 @@
 <template >
   <!-- 前端 后端 工具 面试 demo -->
   <section class="navigation">
-    <div>
-      <router-link class="home-card" to="/font_home">
-        <img class="card-img" src="@/assets/images/1.png" alt="目录图片" />
-        <span>前端·点滴</span>
+    <div v-for="item in pages" :key="item.name">
+      <router-link
+        class="home-card"
+        :to="{path:item.path ? item.path:'/home',query:{type:item.key}}"
+      >
+        <img class="card-img" :src="item.img" alt="目录图片" />
+        <span>{{item.name}}</span>
       </router-link>
     </div>
-    <div>
-      <router-link class="home-card" to="/serve_home">
-        <img class="card-img" src="@/assets/images/3.png" alt="目录图片" />
-        <span>后端·笔记</span>
-      </router-link>
-    </div>
-    <div>
-      <router-link class="home-card" to="/tool">
-        <img class="card-img" src="@/assets/images/2.png" alt="目录图片" />
-        <span>缘·工具</span>
-      </router-link>
-    </div>
-    <div>
-      <router-link class="home-card" to="/demos">
-        <img class="card-img" src="@/assets/images/7.png" alt="目录图片" />
-        <span>随心·DEMO</span>
-      </router-link>
+    <div class="links">
+      <a-tooltip v-for="(link, index) in links" :key="index" :title="link.name" placement="top">
+        <img :src="link.img" class="link" @click="linkTo(link.path)" />
+      </a-tooltip>
     </div>
   </section>
 </template>
+
+<script>
+import { articleFuncs } from '@/assets/utils.js'
+import pageMeta from '@/config/pageMeta.js'
+export default {
+  data() {
+    return {
+      pages: pageMeta.pages,
+      links: pageMeta.links,
+      tags: articleFuncs.getTags()
+    }
+  },
+  methods: {
+    linkTo( path ) {
+      if ( path.codePointAt( 0 ) === 47 ) {
+        this.$router.push( path )
+      } else {
+        window.open( path )
+      }
+    }
+  }
+}
+</script>
 <style lang="scss" scoped>
 .navigation {
   margin-top: 3rem;
@@ -46,6 +59,7 @@
 
   &:not(.router-link-exact-active):hover .card-img {
     transform: rotate(2turn);
+    border: 4px solid white;
   }
 
   > span {
@@ -68,6 +82,25 @@
   margin-left: -6px;
   transition: transform 4s, left 4s, -webkit-transform 4s;
 }
+.links {
+  position: fixed;
+  bottom: 1rem;
+  left: 1rem;
+  .link {
+    width: 26px;
+    height: 26px;
+    margin-left: 1.4rem;
+    border-radius: 30px;
+    cursor: pointer;
+    border: 4px solid white;
+    border-width: 0;
+    transition: border-width 0.3s;
+
+    &:hover {
+      border-width: 4px;
+    }
+  }
+}
 
 @media screen and (max-width: 959px) {
   .navigation .home-card {
@@ -78,6 +111,7 @@
 
 .router-link-exact-active .card-img {
   animation: router-img-rotate 10s linear infinite;
+  border: 4px solid rgba(0, 0, 0, 0.2);
 }
 
 @keyframes router-img-rotate {

@@ -26,15 +26,22 @@
 </template>
 
 <script>
-import articleList from '@/config/articleMeta'
+import { articleFuncs } from '@/assets/utils.js'
 export default {
   name: "condition",
   data() {
+    let type = this.$route.query.type || ''
+    let articleList = articleFuncs.getArticlesByPath( type )
     return {
       articleList,
       currentPage: 1,
       pageSize: 3,
       totalPage: articleList.length / this.pageSize
+    }
+  },
+  watch: {
+    $route( newVal ) {
+      this.articleList = articleFuncs.getArticlesByPath( newVal.query.type )
     }
   },
   computed: {
@@ -51,7 +58,7 @@ export default {
       }
     },
     nextPage() {
-      if ( this.currentPage === totalPage ) { return; }
+      if ( this.currentPage === this.totalPage ) { return; }
       this.currentPage++
     }
   }

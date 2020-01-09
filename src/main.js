@@ -56,7 +56,7 @@ import {
   // Tag,
   // TimePicker,
   // Timeline,
-  // Tooltip,
+  Tooltip,
   // // Mention,
   // Upload,
   // // version,
@@ -129,7 +129,7 @@ Vue.use(Row);
 // Vue.use(Tag);
 // Vue.use(TimePicker);
 // Vue.use(Timeline);
-// Vue.use(Tooltip);
+Vue.use(Tooltip);
 // Vue.use(Upload);
 // Vue.use(Skeleton);
 // Vue.use(Comment);
