@@ -6,7 +6,7 @@
 
 <script>
 // @ is an alias to /src
-import Bubble from '../demoCmp/buble'
+import Bubble from '../demoCmp/canvas'
 export default {
   name: "home",
   components: {

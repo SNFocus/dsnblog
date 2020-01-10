@@ -20,6 +20,10 @@ export default {
         }
     ],
     links: [{
+            name: 'Home',
+            img: require('@/assets/images/home.png'),
+            path: '/home',
+        }, {
             name: 'GitHub',
             img: require('@/assets/images/github.png'),
             path: 'https://github.com/Dengsuning',

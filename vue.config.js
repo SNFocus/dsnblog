@@ -1,41 +1,62 @@
 // vue.config.js
+let path = require('path')
 module.exports = {
     configureWebpack: {
         module: {
             rules: [{
-                test: /\.md$/,
-                use: [
-                    'vue-loader',
-                    {
-                        loader: 'vue-markdown-loader/lib/markdown-compiler',
+                    test: /\.js$/,
+                    include: [path.resolve(__dirname, "src/demoCmp/canvas")],
+                    use: [{
+                        loader: "extract-meta-loader",
                         options: {
-                            raw: true
-                        }
-                    },
-                    {
-                        loader: 'extract-meta-loader',
-                        options: {
-                            dest: 'src/config/articleMeta.js',
-                            wrapper: '---',
-                            deleteMetaInfo: true,
+                            dest: 'src/config/canvasDemos.js',
+                            wrapper: /(?<=\/\*\*)[\s\S]*?(?=\*\/)/,
                             metasRegexps: {
-                                title: 'title:',
-                                tags: function(data, getRegexpRes) {
-                                    let tagText = getRegexpRes(data, /(?<=tags:\s*).*/g)
-                                    return getRegexpRes(tagText, /(?<=\[\s?).*(?=\])/).split(/,\s+/)
-                                },
-                                date: 'date:',
-                                categories: 'categories:',
-                                test: 'test:'
+                                title: 'title:'
                             },
                             append: function(loaderCtx, data, getRegexpRes) {
-                                let path = '/article' + getRegexpRes(loaderCtx.resourcePath, /(?<=\\post)\\.*?(?=.md)/).replace(/\\/g, '/')
-                                return { path }
+                                console.log(loaderCtx.resourcePath)
+                                let name = getRegexpRes(loaderCtx.resourcePath, /(?<=\\)\w*?\.js$/)
+                                return { name }
                             }
                         }
-                    }
-                ]
-            }]
+                    }]
+                },
+                {
+                    test: /\.md$/,
+                    use: [
+                        'vue-loader',
+                        {
+                            loader: 'vue-markdown-loader/lib/markdown-compiler',
+                            options: {
+                                raw: true
+                            }
+                        },
+                        {
+                            loader: 'extract-meta-loader',
+                            options: {
+                                dest: 'src/config/articleMeta.js',
+                                wrapper: '---',
+                                deleteMetaInfo: true,
+                                metasRegexps: {
+                                    title: 'title:',
+                                    tags: function(data, getRegexpRes) {
+                                        let tagText = getRegexpRes(data, /(?<=tags:\s*).*/g)
+                                        return getRegexpRes(tagText, /(?<=\[\s?).*(?=\])/).split(/,\s+/)
+                                    },
+                                    date: 'date:',
+                                    categories: 'categories:',
+                                    test: 'test:'
+                                },
+                                append: function(loaderCtx, data, getRegexpRes) {
+                                    let path = '/article' + getRegexpRes(loaderCtx.resourcePath, /(?<=\\post)\\.*?(?=.md)/).replace(/\\/g, '/')
+                                    return { path }
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
         },
         // resolveLoader: {
         //     modules: ['node_modules', 'loader']

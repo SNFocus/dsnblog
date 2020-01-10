@@ -22,6 +22,7 @@
         <div class="date">{{article.date}}</div>
       </footer>
     </article>
+
   </div>
 </template>
 
@@ -30,28 +31,39 @@ import { articleFuncs } from '@/assets/utils.js'
 export default {
   name: "condition",
   data() {
-    let type = this.$route.query.type || ''
-    let articleList = articleFuncs.getArticlesByPath( type )
+    let articleList = [], pageSize = 3
     return {
       articleList,
+      pageSize,
       currentPage: 1,
-      pageSize: 3,
-      totalPage: articleList.length / this.pageSize
+      totalPage: articleList.length / pageSize
     }
   },
   watch: {
     $route( newVal ) {
-      this.articleList = articleFuncs.getArticlesByPath( newVal.query.type )
+      this.loadArticleData( newVal.query.type )
     }
   },
   computed: {
     showArticles() {
       let start = ( this.currentPage - 1 ) * this.pageSize
       let end = this.currentPage * this.pageSize
+      console.log( this.articleList )
       return this.articleList.slice( start, end )
     }
   },
+  mounted() {
+    this.loadArticleData()
+  },
   methods: {
+    loadArticleData( type ) {
+      type = type || this.$route.query.type
+      if ( type ) {
+        this.articleList = articleFuncs.getArticlesByPath( type )
+      } else {
+        this.articleList = articleFuncs.getAll()
+      }
+    },
     prevPage() {
       if ( this.currentPage > 1 ) {
         this.currentPage--
@@ -68,7 +80,17 @@ export default {
 <style lang="scss" scoped>
 .filter {
   padding: 1rem 6rem;
-  position: relative;
+}
+@media screen and (max-width: 767px) {
+  .filter{
+    padding: 1rem 3rem;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .filter{
+    padding: 1rem 2rem;
+  }
 }
 
 .page-arrow {
@@ -88,11 +110,9 @@ export default {
 }
 
 .article-card {
-  position: relative;
   padding: 0.6rem 1rem;
   background-color: #f5f5f5;
   border-radius: 2px;
-  left: 0;
   box-shadow: 0 0 8px 0 rgba(232, 237, 250, 0.6),
     0 2px 4px 0 rgba(232, 237, 250, 0.5);
   transition: left 1.5s;

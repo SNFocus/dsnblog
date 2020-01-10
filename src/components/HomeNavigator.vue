@@ -32,7 +32,7 @@ export default {
   methods: {
     linkTo( path ) {
       if ( path.codePointAt( 0 ) === 47 ) {
-        this.$router.push( path )
+        this.$router.push( path ).catch(err => {err})
       } else {
         window.open( path )
       }
@@ -84,6 +84,7 @@ export default {
 }
 .links {
   position: fixed;
+  z-index: 999;
   bottom: 1rem;
   left: 1rem;
   .link {
@@ -95,6 +96,7 @@ export default {
     border: 4px solid white;
     border-width: 0;
     transition: border-width 0.3s;
+    box-shadow: 0 0 2px 4px rgba(255,255,255,.3);
 
     &:hover {
       border-width: 4px;

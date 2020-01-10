@@ -13,7 +13,7 @@ import {
   // BackTop,
   // Badge,
   // Breadcrumb,
-  // Button,
+  Button,
   // Calendar,
   // Card,
   // Collapse,
@@ -37,13 +37,13 @@ import {
   // notification,
   // Pagination,
   // Popconfirm,
-  // Popover,
+  Popover,
   // Progress,
   // Radio,
   // Rate,
   Row,
   // Select,
-  // Slider,
+  Slider,
   // Spin,
   // Statistic,
   // Steps,
@@ -60,7 +60,7 @@ import {
   // // Mention,
   // Upload,
   // // version,
-  // Drawer,
+  Drawer,
   // Skeleton,
   // Comment,
   // ConfigProvider,
@@ -87,7 +87,7 @@ Vue.use(Base);
 // Vue.use(BackTop);
 // Vue.use(Badge);
 // Vue.use(Breadcrumb);
-// Vue.use(Button);
+Vue.use(Button);
 // Vue.use(Calendar);
 // Vue.use(Card);
 // Vue.use(Collapse);
@@ -97,7 +97,7 @@ Vue.use(Base);
 Vue.use(Col);
 // Vue.use(DatePicker);
 // Vue.use(Divider);
-// Vue.use(Drawer);
+Vue.use(Drawer);
 // Vue.use(Dropdown);
 // Vue.use(Form);
 Vue.use(Icon);
@@ -110,13 +110,13 @@ Vue.use(Icon);
 // Vue.use(Modal);
 // Vue.use(Pagination);
 // Vue.use(Popconfirm);
-// Vue.use(Popover);
+Vue.use(Popover);
 // Vue.use(Progress);
 // Vue.use(Radio);
 // Vue.use(Rate);
 Vue.use(Row);
 // Vue.use(Select);
-// Vue.use(Slider);
+Vue.use(Slider);
 // Vue.use(Spin);
 // Vue.use(Statistic);
 // Vue.use(Steps);
