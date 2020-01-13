@@ -22,7 +22,6 @@
         <div class="date">{{article.date}}</div>
       </footer>
     </article>
-
   </div>
 </template>
 
@@ -61,7 +60,9 @@ export default {
       if ( type ) {
         this.articleList = articleFuncs.getArticlesByPath( type )
       } else {
-        this.articleList = articleFuncs.getAll()
+        if ( document.body.clientWidth > 600 ) {
+          this.articleList = articleFuncs.getAll()
+        }
       }
     },
     prevPage() {
@@ -82,13 +83,13 @@ export default {
   padding: 1rem 6rem;
 }
 @media screen and (max-width: 767px) {
-  .filter{
+  .filter {
     padding: 1rem 3rem;
   }
 }
 
 @media screen and (max-width: 576px) {
-  .filter{
+  .filter {
     padding: 1rem 2rem;
   }
 }

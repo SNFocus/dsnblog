@@ -4,6 +4,23 @@ module.exports = {
     configureWebpack: {
         module: {
             rules: [{
+                    test: /\.vue$/,
+                    include: [path.resolve(__dirname, "src/demoCmp")],
+                    use: [{
+                        loader: "extract-meta-loader",
+                        options: {
+                            dest: 'src/config/demosMeta.js',
+                            wrapper: /(?<=\/\*\*)[\s\S]*?(?=\*\/)/,
+                            metasRegexps: {
+                                title: 'title:'
+                            },
+                            append: function(loaderCtx, data, getRegexpRes) {
+                                let path = "/demo" + getRegexpRes(loaderCtx.resourcePath, /(?<=\\demoCmp).*?(?=\.vue)/).replace(/\\/g, '/').replace(/\/index$/, '')
+                                return { path }
+                            }
+                        }
+                    }]
+                }, {
                     test: /\.js$/,
                     include: [path.resolve(__dirname, "src/demoCmp/canvas")],
                     use: [{

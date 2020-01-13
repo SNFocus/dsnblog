@@ -1,10 +1,6 @@
 /**
  * title: 彩色气泡上升效果 
  */
-
- /**
-  * title: test
-  */
 class Bubble {
     constructor(x, y, option) {
         this.changeStatus(x, y, option)

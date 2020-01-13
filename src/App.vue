@@ -95,8 +95,6 @@ export default {
 }
 
 .router {
-  padding-top: 1.5rem;
-  padding-bottom: 1.5rem;
   z-index: 9;
   color: #333;
   text-align: left;
@@ -106,6 +104,7 @@ export default {
 
 .markdown-body {
   background: #eee;
+  padding: 2rem 2rem 3rem !important;
 }
 
 .backBtn {
