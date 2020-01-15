@@ -12,10 +12,10 @@
     >
       <div
         class="demo-list"
-        v-for="(demo, index) in demoList"
+        v-for="(demo, index) in drawerData"
         :key="index"
         :title="demo.title"
-        @click="startCanvasAnimate(demo.name)"
+        @click="$router.push({path:demo.path,query:{name:demo.name}}).catch(_=>{})"
       >
         <span class="index" :style="{background:randomColor()}">{{index+1}}</span>
         {{demo.title}}
@@ -25,15 +25,21 @@
 </template>
 
 <script>
-import demoList from '@/config/canvasDemos'
+import demoList from '@/config/demosMeta.js'
+import canvasDemosList from "@/config/canvasDemos.js"
 
 export default {
   name: "demo",
   data() {
     return {
       demoList,
+      canvasDemosList,
       dawerVisible: false,
-
+    }
+  },
+  computed:{
+    drawerData(){
+      return this.$route.path.includes('/demo/canvas') ? this.canvasDemosList : this.demoList;
     }
   },
   methods: {

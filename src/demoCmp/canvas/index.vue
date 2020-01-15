@@ -1,10 +1,11 @@
+
 /**
 * title: canvas实现的动画效果合集
 */
 <template>
   <section style="width:100%;height:100%;position:absolute; top: 0; left: 0;">
     <a-row :span="24" type="flex" justify="space-between" class="abs toolbar">
-      <a-button type="ghost" shape="circle" icon="rollback" @click="$router.back()"></a-button>
+      <a-button type="ghost" shape="circle" icon="rollback" @click="$router.push('/demo')"></a-button>
       <a-popover v-model="showSettings" title="Setting" placement="bottomRight">
         <div slot="content">
           <div>
@@ -43,6 +44,9 @@ export default {
     }
   },
   watch: {
+    $route(newVal){
+      this.startCanvasAnimate(newVal.query.name)
+    },
     animateOptions: {
       handler: function ( val ) {
         this.canvasManager.resetOptions( val )
@@ -72,7 +76,7 @@ export default {
         vm.animateOptions = Object.assign( {}, vm.animateOptions, vm.canvasManager.presetOptions )
         vm.canvasManager.startAnimate()
       }
-      )
+      ).catch(err=>console.log(error))
     },
   },
 }

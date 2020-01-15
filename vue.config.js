@@ -15,7 +15,11 @@ module.exports = {
                                 title: 'title:'
                             },
                             append: function(loaderCtx, data, getRegexpRes) {
-                                let path = "/demo" + getRegexpRes(loaderCtx.resourcePath, /(?<=\\demoCmp).*?(?=\.vue)/).replace(/\\/g, '/').replace(/\/index$/, '')
+                                let path =
+                                    "/demo" +
+                                    getRegexpRes(loaderCtx.resourcePath, /(?<=\\demoCmp).*?(?=\.vue)/)
+                                    .replace(/\\/g, '/')
+                                    .replace(/\/index$/, '')
                                 return { path }
                             }
                         }
@@ -34,7 +38,7 @@ module.exports = {
                             append: function(loaderCtx, data, getRegexpRes) {
                                 console.log(loaderCtx.resourcePath)
                                 let name = getRegexpRes(loaderCtx.resourcePath, /(?<=\\)\w*?\.js$/)
-                                return { name }
+                                return { path: '/demo/canvas', name }
                             }
                         }
                     }]
