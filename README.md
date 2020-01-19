@@ -1,4 +1,4 @@
-# loader-demo
+# type-blog
 
 ## Project setup
 ```

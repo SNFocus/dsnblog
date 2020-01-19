@@ -1,6 +1,12 @@
 <template>
   <div style="width:100%;height:100%;">
-    <a-button @click="dawerVisible = !dawerVisible" type="ghost" shape="circle" icon="bars" style="position: absolute; z-index: 99; right: 4rem; top: 1rem; " />
+    <a-button
+      @click="dawerVisible = !dawerVisible"
+      type="ghost"
+      shape="circle"
+      icon="bars"
+      style="position: absolute; z-index: 99; right: 4rem; top: 1rem; "
+    />
     <router-view />
     <a-drawer
       title="Canvas Demos"
@@ -15,44 +21,50 @@
         v-for="(demo, index) in drawerData"
         :key="index"
         :title="demo.title"
-        @click="$router.push({path:demo.path,query:{name:demo.name}}).catch(_=>{})"
+        @click="toDemoPage(demo)"
       >
-        <span class="index" :style="{background:randomColor()}">{{index+1}}</span>
-        {{demo.title}}
+        <span class="index" :style="{ background: randomColor() }">
+          {{ index + 1 }}
+        </span>
+        {{ demo.title }}
       </div>
     </a-drawer>
   </div>
 </template>
 
-<script>
-import demoList from '@/config/demosMeta.js'
-import canvasDemosList from "@/config/canvasDemos.js"
+<script lang="ts">
+import { Component, Watch, Vue } from "vue-property-decorator";
+import DemoList from "@/config/demosMeta";
+import CanvasDemosList from "@/config/canvasDemos";
 
-export default {
-  name: "demo",
-  data() {
-    return {
-      demoList,
-      canvasDemosList,
-      dawerVisible: false,
-    }
-  },
-  computed:{
-    drawerData(){
-      return this.$route.path.includes('/demo/canvas') ? this.canvasDemosList : this.demoList;
-    }
-  },
-  methods: {
-    randomColor() {
-      let alpha = Math.floor( Math.random() * 10 + 2 ) / 10;
-      let getRandomColor = () => ~~( Math.random() * 255 );
-      return `rgba(${getRandomColor()}, ${getRandomColor()}, ${getRandomColor()}, ${alpha})`;
-    },
-    onDrawerClose() {
-      this.dawerVisible = false
-    }
+@Component
+export default class Demo extends Vue {
+  demoList: any = DemoList;
+  canvasDemosList: any = CanvasDemosList;
+  dawerVisible: boolean = false;
+
+  get drawerData(): any[] {
+    return this.$route.path.includes("/demo/canvas")
+      ? this.canvasDemosList
+      : this.demoList;
   }
-};
+
+  randomColor(): string {
+    let alpha: number = Math.floor(Math.random() * 10 + 2) / 10;
+    let getRandomColor = () => ~~(Math.random() * 255);
+    return `rgba(${getRandomColor()}, ${getRandomColor()}, ${getRandomColor()}, ${alpha})`;
+  }
+
+  onDrawerClose(): void {
+    this.dawerVisible = false;
+  }
+
+  toDemoPage(demo: any): void {
+    this.$router
+      .push({ path: demo.path, query: { name: demo.name } })
+      .catch(_ => {});
+  }
+}
 </script>
 <style lang="scss" scoped>
 .demo-list {

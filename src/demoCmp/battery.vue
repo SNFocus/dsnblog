@@ -1,6 +1,6 @@
 /**
-* title: 模仿华为手机充电界面动画
-*/
+ * title: 模仿华为手机充电界面动画
+ */
 <template>
   <section style="padding:1.5rem;overflow:hidden;">
     <section>

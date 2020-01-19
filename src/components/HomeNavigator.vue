@@ -1,41 +1,52 @@
-<template >
+<template>
   <!-- 前端 后端 工具 面试 demo -->
   <section class="navigation">
     <div v-for="item in pages" :key="item.name">
       <router-link
         class="home-card"
-        :to="{path:item.path ? item.path:'/home',query:{type:item.key}}"
+        :to="{
+          path: item.path ? item.path : '/home',
+          query: { type: item.key }
+        }"
       >
         <img class="card-img" :src="item.img" alt="目录图片" />
-        <span>{{item.name}}</span>
+        <span>{{ item.name }}</span>
       </router-link>
     </div>
     <div class="links">
-      <a-tooltip v-for="(link, index) in links" :key="index" :title="link.name" placement="top">
+      <a-tooltip
+        v-for="(link, index) in links"
+        :key="index"
+        :title="link.name"
+        placement="top"
+      >
         <img :src="link.img" class="link" @click="linkTo(link.path)" />
       </a-tooltip>
     </div>
   </section>
 </template>
 
-<script>
-import { articleFuncs } from '@/assets/utils.js'
-import pageMeta from '@/config/pageMeta.js'
-export default {
-  data() {
-    return {
-      pages: pageMeta.pages,
-      links: pageMeta.links,
-      tags: articleFuncs.getTags()
-    }
-  },
-  methods: {
-    linkTo( path ) {
-      if ( path.codePointAt( 0 ) === 47 ) {
-        this.$router.push( path ).catch(err => {err})
-      } else {
-        window.open( path )
-      }
+<script lang="ts">
+import { ArticleFuncs } from "@/assets/utils.ts";
+import { PageMeta } from "@/config/pageMeta.ts";
+import { Component, Vue } from "vue-property-decorator";
+
+@Component
+export default class HomeNavigator extends Vue {
+  articleFuncs = new ArticleFuncs();
+  pages: Array<any> = PageMeta.pages;
+  links: Array<any> = PageMeta.links;
+  tags: Array<any> = [];
+
+  mounted(): void {
+    this.tags = this.articleFuncs.getTags();
+  }
+
+  linkTo(path: string): void {
+    if (path.codePointAt(0) === 47) {
+      this.$router.push(path).catch(err => err);
+    } else {
+      window.open(path);
     }
   }
 }
@@ -96,7 +107,7 @@ export default {
     border: 4px solid white;
     border-width: 0;
     transition: border-width 0.3s;
-    box-shadow: 0 0 2px 4px rgba(255,255,255,.3);
+    box-shadow: 0 0 2px 4px rgba(255, 255, 255, 0.3);
 
     &:hover {
       border-width: 4px;

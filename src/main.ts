@@ -1,8 +1,10 @@
 import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
-import 'ant-design-vue/dist/antd.css'
-import 'github-markdown-css';
+import store from "./store";
+
+import "ant-design-vue/dist/antd.css";
+import "github-markdown-css";
 
 import {
   // Affix,
@@ -60,13 +62,15 @@ import {
   // // Mention,
   // Upload,
   // // version,
-  Drawer,
+  Drawer
   // Skeleton,
   // Comment,
   // ConfigProvider,
   // Empty,
-  Base,
-} from 'ant-design-vue';
+  // Base,
+} from "ant-design-vue";
+
+Vue.config.productionTip = false;
 
 // Vue.prototype.$message = message;
 // Vue.prototype.$notification = notification;
@@ -78,7 +82,7 @@ import {
 // Vue.prototype.$destroyAll = Modal.destroyAll;
 
 /* v1.1.3+ registration methods */
-Vue.use(Base);
+// Vue.use(Base);
 // Vue.use(Affix);
 // Vue.use(Anchor);
 // Vue.use(AutoComplete);
@@ -139,5 +143,6 @@ Vue.config.productionTip = false;
 
 new Vue({
   router,
+  store,
   render: h => h(App)
 }).$mount("#app");

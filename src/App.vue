@@ -1,61 +1,80 @@
 <template>
   <div id="app">
     <a-row id="nav">
-      <a-col :xs="{span:24}" :md="{span:12}" style="height:100%;">
-        <a-col :xs="{span:24}" :md="{span:22}" style="padding-top:2rem;">
+      <a-col :xs="{ span: 24 }" :md="{ span: 12 }" style="height:100%;">
+        <a-col :xs="{ span: 24 }" :md="{ span: 22 }" style="padding-top:2rem;">
           <h1
             class="white-shadow"
             style="color:white;cursor:pointer;"
-            @click="$router.push('/home').catch(err=>{})"
-          >Focus On</h1>
+            @click="$router.push('/home').catch(err => {})"
+          >
+            Focus On
+          </h1>
           <p class="white-shadow">前端、后端学习笔记，专注成就自我</p>
         </a-col>
         <a-col :span="22" :offset="1" style="max-width:550px;margin-top:10%;">
           <home-navigator></home-navigator>
         </a-col>
       </a-col>
-      <a-col :xs="{span:24}" :md="{span:12}" class="router-wrapper" :class="{show:showRouterPage}">
-        <a-icon v-show="isArticlePage" type="left-circle" class="backBtn" @click="$router.go(-1)" />
-        <a-col class="router" :class="{'markdown-body':isArticlePage}" :span="24">
+      <a-col
+        :xs="{ span: 24 }"
+        :md="{ span: 12 }"
+        class="router-wrapper"
+        :class="{ show: showRouterPage }"
+      >
+        <a-icon
+          v-show="isArticlePage"
+          type="left-circle"
+          class="backBtn"
+          @click="routerBack"
+        />
+        <a-col
+          class="router"
+          :class="{ 'markdown-body': isArticlePage }"
+          :span="24"
+        >
           <router-view />
         </a-col>
       </a-col>
     </a-row>
   </div>
 </template>
-<script>
-import HomeNavigator from '@/components/HomeNavigator'
 
-export default {
-  data() {
-    return {
-      isArticlePage: this.$route.path.includes( '/article/' )
-    }
-  },
-  computed: {
-    showRouterPage() {
-      let showPage = false
-      if ( this.$route.path === '/home' ) {
-        if ( this.$route.query.type ) {
-          showPage = true
-        }
-      }else{
-        showPage = true
-      }
-      return showPage
-    }
-  },
-  watch: {
-    $route( val ) {
-      this.isArticlePage = val.path.includes( '/article/' )
-    }
-  },
+<script lang="ts">
+import { Component, Watch, Vue } from "vue-property-decorator";
+import HomeNavigator from "@/components/HomeNavigator.vue";
+@Component({
   components: {
-    'home-navigator': HomeNavigator
+    "home-navigator": HomeNavigator
+  }
+})
+export default class App extends Vue {
+  isArticlePage: boolean = false;
+
+  get showRouterPage() {
+    let showPage: boolean = false;
+    if (this.$route.path === "/home") {
+      if (this.$route.query.type) {
+        showPage = true;
+      }
+    } else {
+      showPage = true;
+    }
+    return showPage;
+  }
+
+  routerBack() {
+    this.$router.back();
+  }
+
+  @Watch("$route", { immediate: true, deep: true })
+  onRouteChange(newVal: any): void {
+    this.isArticlePage = newVal.path.includes("/article/");
   }
 }
 </script>
-<style>
+
+<style lang="scss">
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -91,7 +110,7 @@ export default {
 }
 
 .white-shadow {
-  text-shadow: 0 0 4px rgb(255, 255, 255, 0.6);
+  text-shadow: 0 0 4px rgba(255, 255, 255, 0.6);
 }
 
 .router {
@@ -132,8 +151,8 @@ export default {
     position: fixed !important;
     top: 0;
     left: 100%;
-    background: rgb(0, 0, 0, 0.4);
-    transition: left .5s;
+    background: rgba(0, 0, 0, 0.4);
+    transition: left 0.5s;
   }
 
   .router-wrapper.show {

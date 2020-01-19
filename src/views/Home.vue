@@ -1,6 +1,11 @@
 <template>
   <div class="filter">
-    <a-icon v-if="currentPage>1" class="page-arrow" type="caret-left" @click.native="prevPage" />
+    <a-icon
+      v-if="currentPage > 1"
+      class="page-arrow"
+      type="caret-left"
+      @click.native="prevPage"
+    />
     <a-icon
       v-if="currentPage < totalPage"
       class="page-arrow"
@@ -9,75 +14,78 @@
     />
     <article
       class="article-card"
-      v-for="(article,index) in showArticles"
+      v-for="(article, index) in showArticles"
       :key="index"
       @click="$router.push(article.path)"
     >
-      <header class="title">{{article.title}}</header>
-      <p class="desc">{{article.categories}}</p>
+      <header class="title">{{ article.title }}</header>
+      <p class="desc">{{ article.categories }}</p>
       <footer class="footer">
         <span class="tags">
-          <span v-for="(tag,tag_index) in article.tags" :key="tag_index">{{tag}}</span>
+          <span v-for="(tag, tag_index) in article.tags" :key="tag_index">
+            {{ tag }}
+          </span>
         </span>
-        <div class="date">{{article.date}}</div>
+        <div class="date">{{ article.date }}</div>
       </footer>
     </article>
   </div>
 </template>
 
-<script>
-import { articleFuncs } from '@/assets/utils.js'
-export default {
-  name: "condition",
-  data() {
-    let articleList = [], pageSize = 3
-    return {
-      articleList,
-      pageSize,
-      currentPage: 1,
-      totalPage: articleList.length / pageSize
-    }
-  },
-  watch: {
-    $route( newVal ) {
-      this.loadArticleData( newVal.query.type )
-    }
-  },
-  computed: {
-    showArticles() {
-      let start = ( this.currentPage - 1 ) * this.pageSize
-      let end = this.currentPage * this.pageSize
-      console.log( this.articleList )
-      return this.articleList.slice( start, end )
-    }
-  },
+<script lang="ts">
+import { Component, Watch, Vue } from "vue-property-decorator";
+import { ArticleFuncs } from "@/assets/utils";
+
+@Component
+export default class Home extends Vue {
+  articleFuncs = new ArticleFuncs();
+  articleList: Array<any> = [];
+  pageSize: number = 3;
+  currentPage: number = 1;
+  totalPage: number = 0;
+
+  created() {
+    this.totalPage = this.articleList.length / this.pageSize;
+  }
   mounted() {
-    this.loadArticleData()
-  },
-  methods: {
-    loadArticleData( type ) {
-      type = type || this.$route.query.type
-      if ( type ) {
-        this.articleList = articleFuncs.getArticlesByPath( type )
-      } else {
-        if ( document.body.clientWidth > 600 ) {
-          this.articleList = articleFuncs.getAll()
-        }
+    this.loadArticleData();
+  }
+
+  get showArticles() {
+    let start = (this.currentPage - 1) * this.pageSize;
+    let end = this.currentPage * this.pageSize;
+    return this.articleList.slice(start, end);
+  }
+
+  @Watch("$route", { immediate: true })
+  onRouteChange(newVal: any) {
+    this.loadArticleData(newVal.query.type);
+  }
+
+  loadArticleData(type?: string | null | undefined): void {
+    if (typeof type === "string") {
+      this.articleList = this.articleFuncs.getArticlesByPath(type);
+    } else {
+      if (document.body.clientWidth > 600) {
+        this.articleList = this.articleFuncs.getAll();
       }
-    },
-    prevPage() {
-      if ( this.currentPage > 1 ) {
-        this.currentPage--
-      }
-    },
-    nextPage() {
-      if ( this.currentPage === this.totalPage ) { return; }
-      this.currentPage++
     }
   }
-};
-</script>
 
+  prevPage(): void {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+    }
+  }
+
+  nextPage(): void {
+    if (this.currentPage === this.totalPage) {
+      return;
+    }
+    this.currentPage++;
+  }
+}
+</script>
 <style lang="scss" scoped>
 .filter {
   padding: 1rem 6rem;
@@ -160,4 +168,3 @@ export default {
   }
 }
 </style>
-
