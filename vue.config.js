@@ -1,7 +1,7 @@
 // vue.config.js
 let path = require("path");
 module.exports = {
-  publicPath: process.env.NODE_ENV === "production" ? "/[dsnblog]/" : "/",
+  publicPath: process.env.NODE_ENV === "production" ? "/dsnblog/" : "/",
   configureWebpack: {
     module: {
       rules: [
